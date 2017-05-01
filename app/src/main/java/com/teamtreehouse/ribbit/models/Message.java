@@ -80,7 +80,7 @@ public class Message implements Comparable<Message> {
 
     @Override
     public int compareTo(Message another) {
-        Date otherCreatedAt = ((Message)another).getCreatedAt();
+        Date otherCreatedAt = another.getCreatedAt();
         return this.createdAt.compareTo(otherCreatedAt);
     }
 

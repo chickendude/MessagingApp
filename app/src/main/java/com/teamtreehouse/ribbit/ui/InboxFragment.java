@@ -23,6 +23,7 @@ import java.util.List;
 
 public class InboxFragment extends ListFragment {
 
+	private static final String TAG = InboxFragment.class.getSimpleName();
 	protected List<Message> mMessages;
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -35,15 +36,21 @@ public class InboxFragment extends ListFragment {
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 		mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
 		// Deprecated method - what should we call instead?
-		mSwipeRefreshLayout.setColorScheme(
+		mSwipeRefreshLayout.setColorSchemeResources(
 				R.color.swipeRefresh1,
 				R.color.swipeRefresh2,
 				R.color.swipeRefresh3,
 				R.color.swipeRefresh4);
 
-		retrieveMessages();
+//		retrieveMessages();
 
 		return rootView;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		retrieveMessages();
 	}
 
 	@Override
@@ -77,6 +84,7 @@ public class InboxFragment extends ListFragment {
 							usernames[i] = message.getString(Message.KEY_SENDER_NAME);
 							i++;
 						}
+						getListView();
 						if (getListView().getAdapter() == null) {
 							MessageAdapter adapter = new MessageAdapter(
 									getListView().getContext(),

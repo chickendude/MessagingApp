@@ -270,7 +270,6 @@ public class MainActivity extends FragmentActivity implements
     }
 
     private void navigateToLogin() {
-		Log.d(TAG, "start login activity");
 		Intent intent = new Intent(this, LoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         // change this intent so that the user can't hit "back" and get into the inbox

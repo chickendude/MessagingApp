@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -59,6 +58,12 @@ public class RecipientsActivity extends Activity {
 		mGridView.setOnItemClickListener(mOnItemClickListener);
 
 		mSendButton = (Button) findViewById(R.id.sendButton);
+		mSendButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				sendMessage();
+			}
+		});
 
 		TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
 		mGridView.setEmptyView(emptyTextView);
@@ -116,17 +121,7 @@ public class RecipientsActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.recipients, menu);
-		mSendMenuItem = menu.getItem(0);
-		return true;
 	}
 
 	@Override
@@ -142,23 +137,24 @@ public class RecipientsActivity extends Activity {
 				//
 				NavUtils.navigateUpFromSameTask(this);
 				return true;
-			case R.id.action_send:
-				Message message = createMessage();
-				if (message == null) {
-					// error
-					AlertDialog.Builder builder = new AlertDialog.Builder(this);
-					builder.setMessage(R.string.error_selecting_file)
-							.setTitle(R.string.error_selecting_file_title)
-							.setPositiveButton(android.R.string.ok, null);
-					AlertDialog dialog = builder.create();
-					dialog.show();
-				} else {
-					send(message);
-					finish();
-				}
-				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void sendMessage() {
+		Message message = createMessage();
+		if (message == null) {
+			// error
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.error_selecting_file)
+					.setTitle(R.string.error_selecting_file_title)
+					.setPositiveButton(android.R.string.ok, null);
+			AlertDialog dialog = builder.create();
+			dialog.show();
+		} else {
+			send(message);
+			finish();
+		}
 	}
 
 	protected Message createMessage() {

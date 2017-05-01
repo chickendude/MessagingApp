@@ -19,79 +19,81 @@ import java.util.UUID;
 
 public class MockMessages {
 
-    private static MockMessages instance = null;
-    private ArrayList<Message> allMessages;
+	public static final String TAG = MockMessages.class.getSimpleName();
 
-    private static final int NUM_TEST_MESSAGES = 15;
+	private static MockMessages instance = null;
+	private ArrayList<Message> allMessages;
 
-    public static MockMessages getInstance() {
-        if (instance == null) {
-            instance = new MockMessages();
-        }
-        return instance;
-    }
+	private static final int NUM_TEST_MESSAGES = 15;
 
-    public MockMessages() {
-        allMessages = new ArrayList<>();
+	public static MockMessages getInstance() {
+		if (instance == null) {
+			instance = new MockMessages();
+		}
+		return instance;
+	}
 
-        for (int i = 0; i < NUM_TEST_MESSAGES; i++) {
-            allMessages.add(getTestPhotoMessage());
-        }
-    }
+	public MockMessages() {
+		allMessages = new ArrayList<>();
 
-    public void saveMessage(Message msg) {
-        allMessages.add(msg);
-    }
+		for (int i = 0; i < NUM_TEST_MESSAGES; i++) {
+			allMessages.add(getTestPhotoMessage());
+		}
+	}
 
-    public ArrayList<Message> getAllMessages() {
-        return allMessages;
-    }
+	public void saveMessage(Message msg) {
+		allMessages.add(msg);
+	}
 
-    public ArrayList<Message> getMessagesForUser(String userId) {
-        ArrayList<Message> userMessages = new ArrayList<>();
+	public ArrayList<Message> getAllMessages() {
+		return allMessages;
+	}
 
-        for (Message msg : allMessages) {
-            ArrayList<String> recipients = (ArrayList<String>) msg.getList(Message.KEY_RECIPIENT_IDS);
-            for (String recipient : recipients) {
-                if (recipient.equals((userId))) {
-                    userMessages.add(msg);
-                }
-            }
-        }
+	public ArrayList<Message> getMessagesForUser(String userId) {
+		ArrayList<Message> userMessages = new ArrayList<>();
 
-        return userMessages;
-    }
+		for (Message msg : allMessages) {
+			ArrayList<String> recipients = (ArrayList<String>) msg.getList(Message.KEY_RECIPIENT_IDS);
+			for (String recipient : recipients) {
+				if (recipient.equals((userId))) {
+					userMessages.add(msg);
+				}
+			}
+		}
 
-    private Message getTestPhotoMessage() {
-        int randomUserIndex = new Random().nextInt(MockUsers.testUsers.size());
-        User sender = MockUsers.testUsers.get(randomUserIndex);
+		return userMessages;
+	}
 
-        Message photoMessage = new Message("");
+	private Message getTestPhotoMessage() {
+		int randomUserIndex = new Random().nextInt(MockUsers.testUsers.size());
+		User sender = MockUsers.testUsers.get(randomUserIndex);
 
-        Uri testPhotoUri = Uri.parse("android.resource://" + RibbitApplication.PACKAGE_NAME + "/" + R.raw.poley_thinks);
-        photoMessage.put(Message.KEY_SENDER_ID, sender.getObjectId());
-        photoMessage.put(Message.KEY_SENDER_NAME, sender.getUsername());
+		Message photoMessage = new Message("");
 
-        ArrayList<String> recipientIds = new ArrayList<>();
-        recipientIds.add(User.getCurrentUser().getObjectId());
-        photoMessage.put(Message.KEY_RECIPIENT_IDS, recipientIds);
+		Uri testPhotoUri = Uri.parse("android.resource://" + RibbitApplication.PACKAGE_NAME + "/" + R.raw.poley_thinks);
+		photoMessage.put(Message.KEY_SENDER_ID, sender.getObjectId());
+		photoMessage.put(Message.KEY_SENDER_NAME, sender.getUsername());
 
-        photoMessage.put(Message.KEY_FILE_TYPE, Message.TYPE_IMAGE);
-        byte[] fileBytes = FileHelper.getByteArrayFromFile(null, testPhotoUri);
-        MessageFile file = new MessageFile("test_photo.png", fileBytes, testPhotoUri);
-        photoMessage.put(Message.KEY_FILE, file);
+		ArrayList<String> recipientIds = new ArrayList<>();
+		recipientIds.add(User.getCurrentUser().getObjectId());
+		photoMessage.put(Message.KEY_RECIPIENT_IDS, recipientIds);
 
-        return photoMessage;
-    }
+		photoMessage.put(Message.KEY_FILE_TYPE, Message.TYPE_IMAGE);
+		byte[] fileBytes = FileHelper.getByteArrayFromFile(null, testPhotoUri);
+		MessageFile file = new MessageFile("test_photo.png", fileBytes, testPhotoUri);
+		photoMessage.put(Message.KEY_FILE, file);
 
-    public boolean deleteMessage(UUID msgId) {
-        for (Message msg : allMessages) {
-            if (msg.getId() == msgId) {
-                allMessages.remove(msg);
-                return true;
-            }
-        }
+		return photoMessage;
+	}
 
-        return false;
-    }
+	public boolean deleteMessage(UUID msgId) {
+		for (Message msg : allMessages) {
+			if (msg.getId() == msgId) {
+				allMessages.remove(msg);
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

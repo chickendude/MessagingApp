@@ -167,7 +167,7 @@ public class MainActivity extends FragmentActivity implements
 
         User currentUser = User.getCurrentUser();
         if (currentUser == null) {
-            navigateToLogin();
+			navigateToLogin();
         } else {
             Log.i(TAG, currentUser.getUsername());
         }
@@ -270,7 +270,8 @@ public class MainActivity extends FragmentActivity implements
     }
 
     private void navigateToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
+		Log.d(TAG, "start login activity");
+		Intent intent = new Intent(this, LoginActivity.class);
         // change this intent so that the user can't hit "back" and get into the inbox
         startActivity(intent);
     }

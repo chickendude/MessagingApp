@@ -19,79 +19,79 @@ import java.util.List;
 
 public class UserAdapter extends ArrayAdapter<User> {
 
-    protected Context mContext;
-    protected List<User> mUsers;
+	protected Context mContext;
+	protected List<User> mUsers;
 
-    public UserAdapter(Context context, List<User> users) {
-        super(context, R.layout.message_item, users);
-        mContext = context;
+	public UserAdapter(Context context, List<User> users) {
+		super(context, R.layout.message_item, users);
+		mContext = context;
 
-        // Create a full copy of mUsers
-        mUsers = new ArrayList<User>();
-        for (User user : users) {
-            mUsers.add(user);
-        }
-    }
+		// Create a full copy of mUsers
+		mUsers = new ArrayList<User>();
+		for (User user : users) {
+			mUsers.add(user);
+		}
+	}
 
-    @Override
-    public int getCount() {
-        return mUsers.size();
-    }
+	@Override
+	public int getCount() {
+		return mUsers.size();
+	}
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder holder;
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.user_item, null);
-            holder = new ViewHolder();
-            holder.userImageView = (ImageView) convertView.findViewById(R.id.userImageView);
-            holder.nameLabel = (TextView) convertView.findViewById(R.id.nameLabel);
-            holder.checkImageView = (ImageView) convertView.findViewById(R.id.checkImageView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+		if (convertView == null) {
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.user_item, null);
+			holder = new ViewHolder();
+			holder.userImageView = (ImageView) convertView.findViewById(R.id.userImageView);
+			holder.nameLabel = (TextView) convertView.findViewById(R.id.nameLabel);
+			holder.checkImageView = (ImageView) convertView.findViewById(R.id.checkImageView);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 
-        User user = mUsers.get(position);
-        String email = user.getEmail();
+		User user = mUsers.get(position);
+		String email = user.getEmail();
 
-        if (email == null || email.equals("")) {
-            holder.userImageView.setImageResource(R.drawable.avatar_empty);
-        } else {
-            email = email.toLowerCase();
-            String hash = MD5Util.md5Hex(email);
-            String gravatarUrl = "http://www.gravatar.com/avatar/" + hash +
-                    "?s=204&d=404";
-            Picasso.with(mContext)
-                    .load(gravatarUrl)
-                    .placeholder(R.drawable.avatar_empty)
-                    .into(holder.userImageView);
-        }
+		if (email == null || email.equals("")) {
+			holder.userImageView.setImageResource(R.drawable.avatar_empty);
+		} else {
+			email = email.toLowerCase();
+			String hash = MD5Util.md5Hex(email);
+			String gravatarUrl = "http://www.gravatar.com/avatar/" + hash +
+					"?s=204&d=404";
+			Picasso.with(mContext)
+					.load(gravatarUrl)
+					.placeholder(R.drawable.avatar_empty)
+					.into(holder.userImageView);
+		}
 
-        holder.nameLabel.setText(user.getUsername());
+		holder.nameLabel.setText(user.getUsername());
 
-        GridView gridView = (GridView) parent;
-        if (gridView.isItemChecked(position)) {
-            holder.checkImageView.setVisibility(View.VISIBLE);
-        } else {
-            holder.checkImageView.setVisibility(View.INVISIBLE);
-        }
+		GridView gridView = (GridView) parent;
+		if (gridView.isItemChecked(position)) {
+			holder.checkImageView.setVisibility(View.VISIBLE);
+		} else {
+			holder.checkImageView.setVisibility(View.INVISIBLE);
+		}
 
-        return convertView;
-    }
+		return convertView;
+	}
 
-    private static class ViewHolder {
-        ImageView userImageView;
-        ImageView checkImageView;
-        TextView nameLabel;
-    }
+	private static class ViewHolder {
+		ImageView userImageView;
+		ImageView checkImageView;
+		TextView nameLabel;
+	}
 
-    public void refill(List<User> users) {
-        mUsers.clear();
-        mUsers.addAll(users);
-        notifyDataSetChanged();
-    }
+	public void refill(List<User> users) {
+		mUsers.clear();
+		mUsers.addAll(users);
+		notifyDataSetChanged();
+	}
 }
 
 

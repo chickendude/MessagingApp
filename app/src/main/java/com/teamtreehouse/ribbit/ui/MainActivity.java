@@ -136,7 +136,7 @@ public class MainActivity extends FragmentActivity implements
                 private boolean isExternalStorageAvailable() {
                     String state = Environment.getExternalStorageState();
 
-                    if (!state.equals(Environment.MEDIA_MOUNTED)) {
+                    if (state.equals(Environment.MEDIA_MOUNTED)) {
                         return true;
                     } else {
                         return false;

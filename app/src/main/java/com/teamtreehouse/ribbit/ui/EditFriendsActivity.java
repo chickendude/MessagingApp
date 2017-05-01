@@ -154,11 +154,11 @@ public class EditFriendsActivity extends Activity {
             if (mGridView.isItemChecked(position)) {
                 // add the friend
                 mFriendsRelation.add(mUsers.get(position));
-                checkImageView.setVisibility(View.INVISIBLE);
+                checkImageView.setVisibility(View.VISIBLE);
             } else {
                 // remove the friend
                 mFriendsRelation.remove(mUsers.get(position));
-                checkImageView.setVisibility(View.VISIBLE);
+                checkImageView.setVisibility(View.INVISIBLE);
             }
 
             mCurrentUser.saveInBackground(new SaveCallback() {

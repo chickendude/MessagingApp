@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements InboxFragment.FabListener {
 
 	public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -190,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
 	public void sendNewMessage(int which) {
 		switch (which) {
 			case 0: // Take picture
@@ -285,4 +284,8 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	@Override
+	public void onFabPressed(int button) {
+		sendNewMessage(button);
+	}
 }

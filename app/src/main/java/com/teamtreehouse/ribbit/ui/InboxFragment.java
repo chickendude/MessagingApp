@@ -1,5 +1,7 @@
 package com.teamtreehouse.ribbit.ui;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.teamtreehouse.ribbit.R;
@@ -25,10 +26,27 @@ import com.teamtreehouse.ribbit.models.callbacks.FindCallback;
 import java.util.List;
 
 public class InboxFragment extends ListFragment {
+	public interface FabListener {
+		void onFabPressed(int button);
+	}
 
 	private static final String TAG = InboxFragment.class.getSimpleName();
 	protected List<Message> mMessages;
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
+	private FabListener mFabListener;
+
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		mFabListener = (FabListener) context;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		mFabListener = (FabListener) activity;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,9 +61,28 @@ public class InboxFragment extends ListFragment {
 		fabPicture.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
+				mFabListener.onFabPressed(0);
 			}
 		});
+		fabVideo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mFabListener.onFabPressed(1);
+			}
+		});
+		fabChoosePicture.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mFabListener.onFabPressed(2);
+			}
+		});
+		fabChooseVideo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mFabListener.onFabPressed(3);
+			}
+		});
+
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 		mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
 		// Deprecated method - what should we call instead?

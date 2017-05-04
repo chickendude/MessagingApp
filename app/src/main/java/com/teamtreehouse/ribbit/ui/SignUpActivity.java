@@ -1,20 +1,20 @@
 package com.teamtreehouse.ribbit.ui;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.teamtreehouse.ribbit.R;
-import com.teamtreehouse.ribbit.models.callbacks.SignUpCallback;
 import com.teamtreehouse.ribbit.models.User;
+import com.teamtreehouse.ribbit.models.callbacks.SignUpCallback;
 
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends AppCompatActivity {
 
     protected EditText mUsername;
     protected EditText mPassword;
@@ -29,7 +29,7 @@ public class SignUpActivity extends Activity {
         setContentView(R.layout.activity_sign_up);
 
         ActionBar actionBar = getActionBar();
-        actionBar.hide();
+//        actionBar.hide();
 
         mUsername = (EditText) findViewById(R.id.usernameField);
         mPassword = (EditText) findViewById(R.id.passwordField);

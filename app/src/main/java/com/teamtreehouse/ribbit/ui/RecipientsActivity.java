@@ -1,10 +1,10 @@
 package com.teamtreehouse.ribbit.ui;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +32,7 @@ import com.teamtreehouse.ribbit.utils.FileHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipientsActivity extends Activity {
+public class RecipientsActivity extends AppCompatActivity {
 
 	public static final String TAG = RecipientsActivity.class.getSimpleName();
 
@@ -121,7 +121,7 @@ public class RecipientsActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

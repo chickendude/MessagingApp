@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.teamtreehouse.ribbit.R;
 import com.teamtreehouse.ribbit.adapters.MessageAdapter;
 import com.teamtreehouse.ribbit.models.Message;
@@ -34,6 +36,16 @@ public class InboxFragment extends ListFragment {
 		View rootView = inflater.inflate(R.layout.fragment_inbox,
 				container, false);
 
+		FloatingActionButton fabPicture = (FloatingActionButton) rootView.findViewById(R.id.fabPicture);
+		FloatingActionButton fabVideo = (FloatingActionButton) rootView.findViewById(R.id.fabVideo);
+		FloatingActionButton fabChoosePicture = (FloatingActionButton) rootView.findViewById(R.id.fabChoosePicture);
+		FloatingActionButton fabChooseVideo = (FloatingActionButton) rootView.findViewById(R.id.fabChooseVideo);
+		fabPicture.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
+			}
+		});
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 		mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
 		// Deprecated method - what should we call instead?

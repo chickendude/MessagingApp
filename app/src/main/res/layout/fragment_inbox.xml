@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:app="http://schemas.android.com/apk/res-auto"
+				xmlns:fab="http://schemas.android.com/apk/res-auto"
 				xmlns:tools="http://schemas.android.com/tools"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				xmlns:app="http://schemas.android.com/apk/res-auto"
-				tools:context=".MainActivity$DummySectionFragment">
+				tools:context=".ui.MainActivity$DummySectionFragment">
 
 	<android.support.v4.widget.SwipeRefreshLayout
 		android:id="@+id/swipeRefreshLayout"
@@ -30,12 +31,39 @@
 		android:padding="@dimen/activity_horizontal_margin"
 		android:text="@string/empty_inbox_label"/>
 
-	<android.support.design.widget.FloatingActionButton
+	<com.github.clans.fab.FloatingActionMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_alignParentRight="true"
-		android:layout_margin="16dp"
-		android:src="@android:drawable/ic_menu_add"
-		app:fabSize="normal"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
+		android:layout_margin="16dp">
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fabPicture"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			fab:fab_label="Take Picture"
+			fab:fab_size="mini"/>
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fabVideo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			fab:fab_label="Take Video"
+			fab:fab_size="mini"/>
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fabChoosePicture"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			fab:fab_label="Choose Picture"
+			fab:fab_size="mini"/>
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fabChooseVideo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			fab:fab_label="ChooseVideo"
+			fab:fab_size="mini"/>
+	</com.github.clans.fab.FloatingActionMenu>
 </RelativeLayout>

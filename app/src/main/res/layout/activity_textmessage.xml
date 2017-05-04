@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				style="@style/AuthBackground"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_centerInParent="true"
+		android:id="@+id/editTextLayout"
+		style="@style/AuthFieldContainer">
+		<EditText
+			android:id="@+id/messageEdit"
+			style="@style/AuthEditText"
+			android:gravity="bottom"
+			android:layout_height="100dp"
+			android:layout_width="match_parent"
+			android:hint="Type your message"/>
+	</LinearLayout>
+	<Button
+		android:id="@+id/sendButton"
+		style="@style/AuthButton"
+		android:text="Send Message"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/editTextLayout" />
+</RelativeLayout>

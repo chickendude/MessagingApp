@@ -58,6 +58,7 @@ public class InboxFragment extends ListFragment {
 		FloatingActionButton fabVideo = (FloatingActionButton) rootView.findViewById(R.id.fabVideo);
 		FloatingActionButton fabChoosePicture = (FloatingActionButton) rootView.findViewById(R.id.fabChoosePicture);
 		FloatingActionButton fabChooseVideo = (FloatingActionButton) rootView.findViewById(R.id.fabChooseVideo);
+		FloatingActionButton fabSendText = (FloatingActionButton) rootView.findViewById(R.id.fabSendText);
 		fabPicture.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -80,6 +81,12 @@ public class InboxFragment extends ListFragment {
 			@Override
 			public void onClick(View view) {
 				mFabListener.onFabPressed(3);
+			}
+		});
+		fabSendText.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mFabListener.onFabPressed(4);
 			}
 		});
 
@@ -164,19 +171,26 @@ public class InboxFragment extends ListFragment {
 		updateAdapterWithMessages();
 
 		String messageType = message.getString(Message.KEY_FILE_TYPE);
-		MessageFile file = message.getFile(Message.KEY_FILE);
-		Uri fileUri = file.getUri();
-
-		if (messageType.equals(Message.TYPE_IMAGE)) {
-			// view the image
-			Intent intent = new Intent(getActivity(), ViewImageActivity.class);
-			intent.setData(fileUri);
+		if (messageType.equals(Message.TYPE_TEXT)) {
+			String messageText = message.getString(Message.KEY_FILE);
+			Intent intent = new Intent(getActivity(), ViewTextMessageActivity.class);
+			intent.putExtra(RecipientsActivity.KEY_MESSAGE, messageText);
 			startActivity(intent);
 		} else {
-			// view the video
-			Intent intent = new Intent(Intent.ACTION_VIEW, fileUri);
-			intent.setDataAndType(fileUri, "video/*");
-			startActivity(intent);
+			MessageFile file = message.getFile(Message.KEY_FILE);
+			Uri fileUri = file.getUri();
+
+			if (messageType.equals(Message.TYPE_IMAGE)) {
+				// view the image
+				Intent intent = new Intent(getActivity(), ViewImageActivity.class);
+				intent.setData(fileUri);
+				startActivity(intent);
+			} else {
+				// view the video
+				Intent intent = new Intent(Intent.ACTION_VIEW, fileUri);
+				intent.setDataAndType(fileUri, "video/*");
+				startActivity(intent);
+			}
 		}
 
 		// Delete it!

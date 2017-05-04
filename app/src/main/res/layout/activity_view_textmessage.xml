@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:tools="http://schemas.android.com/tools"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				tools:context="ui.ViewImageActivity">
+
+	<TextView
+		android:id="@+id/textView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:layout_margin="5dp"
+		android:textAlignment="center"
+		android:textSize="20sp"
+		tools:text="Message"/>
+
+	<TextView
+		android:id="@+id/counterLabel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_margin="16dp"
+		android:textAlignment="center"
+		android:textColor="@android:color/holo_red_dark"
+		android:textSize="16sp"/>
+
+</RelativeLayout>

@@ -229,6 +229,10 @@ public class MainActivity extends AppCompatActivity implements InboxFragment.Fab
 				Toast.makeText(MainActivity.this, R.string.video_file_size_warning, Toast.LENGTH_LONG).show();
 				startActivityForResult(chooseVideoIntent, PICK_VIDEO_REQUEST);
 				break;
+			case 4: // Send text message
+				Intent sendTextMessageIntent = new Intent(this, TextMessageActivity.class);
+				startActivity(sendTextMessageIntent);
+				break;
 		}
 	}
 

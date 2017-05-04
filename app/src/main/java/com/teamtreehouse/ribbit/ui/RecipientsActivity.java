@@ -36,12 +36,15 @@ public class RecipientsActivity extends AppCompatActivity {
 
 	public static final String TAG = RecipientsActivity.class.getSimpleName();
 
+	public static final String KEY_MESSAGE = "tag_message";
+
 	protected Relation<User> mFriendsRelation;
 	protected User mCurrentUser;
 	protected List<User> mFriends;
 	protected MenuItem mSendMenuItem;
 	protected Button mSendButton;
 	protected Uri mMediaUri;
+	protected String mMessageText;
 	protected String mFileType;
 	protected GridView mGridView;
 
@@ -68,8 +71,12 @@ public class RecipientsActivity extends AppCompatActivity {
 		TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
 		mGridView.setEmptyView(emptyTextView);
 
-		mMediaUri = getIntent().getData();
 		mFileType = getIntent().getExtras().getString(Message.KEY_FILE_TYPE);
+		if (mFileType.equals(Message.TYPE_TEXT)) {
+			mMessageText = getIntent().getExtras().getString(KEY_MESSAGE);
+		} else {
+			mMediaUri = getIntent().getData();
+		}
 	}
 
 	@Override
@@ -164,20 +171,25 @@ public class RecipientsActivity extends AppCompatActivity {
 		message.put(Message.KEY_RECIPIENT_IDS, getRecipientIds());
 		message.put(Message.KEY_FILE_TYPE, mFileType);
 
-		byte[] fileBytes = FileHelper.getByteArrayFromFile(this, mMediaUri);
-
-		if (fileBytes == null) {
-			return null;
-		} else {
-			if (mFileType.equals(Message.TYPE_IMAGE)) {
-				fileBytes = FileHelper.reduceImageForUpload(fileBytes);
-			}
-
-			String fileName = FileHelper.getFileName(this, mMediaUri, mFileType);
-			MessageFile file = new MessageFile(fileName, fileBytes, mMediaUri);
-			message.put(Message.KEY_FILE, file);
-
+		if (mFileType.equals(Message.TYPE_TEXT)) {
+			message.put(Message.KEY_FILE, mMessageText);
 			return message;
+		} else {
+			byte[] fileBytes = FileHelper.getByteArrayFromFile(this, mMediaUri);
+
+			if (fileBytes == null) {
+				return null;
+			} else {
+				if (mFileType.equals(Message.TYPE_IMAGE)) {
+					fileBytes = FileHelper.reduceImageForUpload(fileBytes);
+				}
+
+				String fileName = FileHelper.getFileName(this, mMediaUri, mFileType);
+				MessageFile file = new MessageFile(fileName, fileBytes, mMediaUri);
+				message.put(Message.KEY_FILE, file);
+
+				return message;
+			}
 		}
 	}
 

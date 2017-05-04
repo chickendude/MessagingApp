@@ -63,7 +63,14 @@
 			android:id="@+id/fabChooseVideo"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			fab:fab_label="ChooseVideo"
+			fab:fab_label="Choose Video"
+			fab:fab_size="mini"/>
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fabSendText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			fab:fab_label="Send Text Message"
 			fab:fab_size="mini"/>
 	</com.github.clans.fab.FloatingActionMenu>
 </RelativeLayout>

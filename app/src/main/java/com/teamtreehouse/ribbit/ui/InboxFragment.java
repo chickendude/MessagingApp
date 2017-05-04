@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,26 +43,26 @@ public class InboxFragment extends ListFragment {
 				R.color.swipeRefresh3,
 				R.color.swipeRefresh4);
 
-//		retrieveMessages();
-
 		return rootView;
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		Log.d(TAG, "onViewCreated");
 		retrieveMessages();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-
-		getActivity().setProgressBarIndeterminateVisibility(true);
+//		getActivity().setProgressBarIndeterminateVisibility(true);
 	}
 
 	private void retrieveMessages() {
+		Log.d(TAG, "retrieveMessages");
 		if (User.getCurrentUser() != null) {
+			Log.d(TAG, "current user not null");
 			Query<Message> query = Message.getQuery();
 			query.whereEqualTo(Message.KEY_RECIPIENT_IDS, User.getCurrentUser().getObjectId());
 			query.addDescendingOrder(Message.KEY_CREATED_AT);
@@ -78,27 +79,31 @@ public class InboxFragment extends ListFragment {
 						// We found messages!
 						mMessages = messages;
 
-						String[] usernames = new String[mMessages.size()];
-						int i = 0;
-						for (Message message : mMessages) {
-							usernames[i] = message.getString(Message.KEY_SENDER_NAME);
-							i++;
-						}
-						getListView();
-						if (getListView().getAdapter() == null) {
-							MessageAdapter adapter = new MessageAdapter(
-									getListView().getContext(),
-									mMessages);
-							setListAdapter(adapter);
-						} else {
-							// refill the adapter!
-							((MessageAdapter) getListView().getAdapter()).refill(mMessages);
-						}
+//						String[] usernames = new String[mMessages.size()];
+//						int i = 0;
+//						for (Message message : mMessages) {
+//							usernames[i] = message.getString(Message.KEY_SENDER_NAME);
+//							i++;
+//						}
+
+						updateAdapterWithMessages();
 					}
 				}
 			});
 		}
 
+	}
+
+	private void updateAdapterWithMessages() {
+		if (getListView().getAdapter() == null) {
+			MessageAdapter adapter = new MessageAdapter(
+					getListView().getContext(),
+					mMessages);
+			setListAdapter(adapter);
+		} else {
+			// refill the adapter!
+			((MessageAdapter) getListView().getAdapter()).refill(mMessages);
+		}
 	}
 
 	@Override
@@ -123,6 +128,8 @@ public class InboxFragment extends ListFragment {
 		}
 
 		// Delete it!
+		mMessages.remove(position);
+		updateAdapterWithMessages();
 		List<String> ids = message.getList(Message.KEY_RECIPIENT_IDS);
 
 		if (ids.size() == 1) {
@@ -132,6 +139,7 @@ public class InboxFragment extends ListFragment {
 			// remove the recipient
 			message.removeRecipient(User.getCurrentUser().getObjectId());
 		}
+
 	}
 
 	protected OnRefreshListener mOnRefreshListener = new OnRefreshListener() {

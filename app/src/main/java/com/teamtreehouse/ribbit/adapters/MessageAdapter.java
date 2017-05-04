@@ -84,8 +84,10 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
 		if (message.getString(Message.KEY_FILE_TYPE).equals(Message.TYPE_IMAGE)) {
 			holder.iconImageView.setImageResource(R.drawable.ic_picture);
-		} else {
+		} else if(message.getString(Message.KEY_FILE_TYPE).equals(Message.TYPE_VIDEO)){
 			holder.iconImageView.setImageResource(R.drawable.ic_video);
+		} else {
+			holder.iconImageView.setImageResource(R.mipmap.ic_textmessage);
 		}
 		holder.nameLabel.setText(message.getString(Message.KEY_SENDER_NAME));
 

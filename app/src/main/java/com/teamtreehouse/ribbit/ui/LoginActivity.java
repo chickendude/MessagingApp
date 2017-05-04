@@ -1,9 +1,9 @@
 package com.teamtreehouse.ribbit.ui;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,7 +14,7 @@ import com.teamtreehouse.ribbit.R;
 import com.teamtreehouse.ribbit.models.User;
 import com.teamtreehouse.ribbit.models.callbacks.LogInCallback;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     protected EditText mUsername;

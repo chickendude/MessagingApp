@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.teamtreehouse.ribbit.R;
 import com.teamtreehouse.ribbit.models.Message;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +32,8 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 		}
 	}
 
+
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
@@ -52,10 +53,34 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
 		Date createdAt = message.getCreatedAt();
 		long now = new Date().getTime();
-		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d");
-		String convertedDate = format.format(createdAt);
+		long timeAgo = now - createdAt.getTime();
+		long seconds = timeAgo/1000;
+		long minutes = seconds/60;
+		long hours = minutes/60;
+		long days = hours/24;
+		long months = days/30;
 
-		holder.timeLabel.setText(convertedDate);
+		long unitAmount = seconds;
+		String unitName = "second";
+		if (months > 0) {
+			unitAmount = months;
+			unitName = "month";
+		} else if (days > 0) {
+			unitAmount = days;
+			unitName = "day";
+		} else if (hours > 0) {
+			unitAmount = hours;
+			unitName = "hour";
+		} else if (minutes > 0) {
+			unitAmount = minutes;
+			unitName = "minute";
+		}
+
+		if (unitAmount > 1) {
+			unitName += "s";
+		}
+
+		holder.timeLabel.setText(String.format("%d %s ago", unitAmount, unitName));
 
 		if (message.getString(Message.KEY_FILE_TYPE).equals(Message.TYPE_IMAGE)) {
 			holder.iconImageView.setImageResource(R.drawable.ic_picture);
@@ -74,8 +99,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 	}
 
 	public void refill(List<Message> messages) {
-		mMessages.clear();
-		mMessages.addAll(messages);
+		mMessages = messages;
 		notifyDataSetChanged();
 	}
 }

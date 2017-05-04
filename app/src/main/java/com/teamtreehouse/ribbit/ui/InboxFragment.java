@@ -160,6 +160,9 @@ public class InboxFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 
 		Message message = mMessages.get(position);
+		mMessages.remove(position);
+		updateAdapterWithMessages();
+
 		String messageType = message.getString(Message.KEY_FILE_TYPE);
 		MessageFile file = message.getFile(Message.KEY_FILE);
 		Uri fileUri = file.getUri();
@@ -177,8 +180,6 @@ public class InboxFragment extends ListFragment {
 		}
 
 		// Delete it!
-		mMessages.remove(position);
-		updateAdapterWithMessages();
 		List<String> ids = message.getList(Message.KEY_RECIPIENT_IDS);
 
 		if (ids.size() == 1) {
@@ -188,7 +189,6 @@ public class InboxFragment extends ListFragment {
 			// remove the recipient
 			message.removeRecipient(User.getCurrentUser().getObjectId());
 		}
-
 	}
 
 	protected OnRefreshListener mOnRefreshListener = new OnRefreshListener() {

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.teamtreehouse.ribbit.R;
 import com.teamtreehouse.ribbit.adapters.MessageAdapter;
 import com.teamtreehouse.ribbit.models.Message;
@@ -34,6 +35,7 @@ public class InboxFragment extends ListFragment {
 	protected List<Message> mMessages;
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
 	private FabListener mFabListener;
+	private FloatingActionMenu mFloatingActionMenu;
 
 
 	@Override
@@ -54,6 +56,7 @@ public class InboxFragment extends ListFragment {
 		View rootView = inflater.inflate(R.layout.fragment_inbox,
 				container, false);
 
+		mFloatingActionMenu = (FloatingActionMenu) rootView.findViewById(R.id.fabMenu);
 		FloatingActionButton fabPicture = (FloatingActionButton) rootView.findViewById(R.id.fabPicture);
 		FloatingActionButton fabVideo = (FloatingActionButton) rootView.findViewById(R.id.fabVideo);
 		FloatingActionButton fabChoosePicture = (FloatingActionButton) rootView.findViewById(R.id.fabChoosePicture);
@@ -62,30 +65,35 @@ public class InboxFragment extends ListFragment {
 		fabPicture.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				mFloatingActionMenu.close(true);
 				mFabListener.onFabPressed(0);
 			}
 		});
 		fabVideo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				mFloatingActionMenu.close(true);
 				mFabListener.onFabPressed(1);
 			}
 		});
 		fabChoosePicture.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				mFloatingActionMenu.close(true);
 				mFabListener.onFabPressed(2);
 			}
 		});
 		fabChooseVideo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				mFloatingActionMenu.close(true);
 				mFabListener.onFabPressed(3);
 			}
 		});
 		fabSendText.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				mFloatingActionMenu.close(true);
 				mFabListener.onFabPressed(4);
 			}
 		});

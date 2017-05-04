@@ -32,6 +32,7 @@
 		android:text="@string/empty_inbox_label"/>
 
 	<com.github.clans.fab.FloatingActionMenu
+		android:id="@+id/fabMenu"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"

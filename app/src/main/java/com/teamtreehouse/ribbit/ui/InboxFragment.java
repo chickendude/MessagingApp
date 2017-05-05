@@ -37,7 +37,6 @@ public class InboxFragment extends ListFragment {
 	private FabListener mFabListener;
 	private FloatingActionMenu mFloatingActionMenu;
 
-
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
@@ -120,6 +119,7 @@ public class InboxFragment extends ListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		retrieveMessages();
 //		getActivity().setProgressBarIndeterminateVisibility(true);
 	}
 

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,7 @@ public class InboxFragment extends ListFragment {
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
 	private FabListener mFabListener;
 	private FloatingActionMenu mFloatingActionMenu;
+	private MessageAdapter mAdapter;
 
 	@Override
 	public void onAttach(Context context) {
@@ -112,7 +112,6 @@ public class InboxFragment extends ListFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Log.d(TAG, "onViewCreated");
 		retrieveMessages();
 	}
 
@@ -124,9 +123,7 @@ public class InboxFragment extends ListFragment {
 	}
 
 	private void retrieveMessages() {
-		Log.d(TAG, "retrieveMessages");
 		if (User.getCurrentUser() != null) {
-			Log.d(TAG, "current user not null");
 			Query<Message> query = Message.getQuery();
 			query.whereEqualTo(Message.KEY_RECIPIENT_IDS, User.getCurrentUser().getObjectId());
 			query.addDescendingOrder(Message.KEY_CREATED_AT);
@@ -160,10 +157,10 @@ public class InboxFragment extends ListFragment {
 
 	private void updateAdapterWithMessages() {
 		if (getListView().getAdapter() == null) {
-			MessageAdapter adapter = new MessageAdapter(
+			mAdapter = new MessageAdapter(
 					getListView().getContext(),
 					mMessages);
-			setListAdapter(adapter);
+			setListAdapter(mAdapter);
 		} else {
 			// refill the adapter!
 			((MessageAdapter) getListView().getAdapter()).refill(mMessages);
@@ -175,8 +172,8 @@ public class InboxFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 
 		Message message = mMessages.get(position);
+		mAdapter.remove(mMessages.get(position));
 		mMessages.remove(position);
-		updateAdapterWithMessages();
 
 		String messageType = message.getString(Message.KEY_FILE_TYPE);
 		if (messageType.equals(Message.TYPE_TEXT)) {
@@ -220,11 +217,3 @@ public class InboxFragment extends ListFragment {
 		}
 	};
 }
-
-
-
-
-
-
-
-
